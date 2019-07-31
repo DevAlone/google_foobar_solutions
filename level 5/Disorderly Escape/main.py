@@ -1,37 +1,6 @@
 import math
 
 
-# def getMatrixHash(matrix):
-#     rowsHash = []
-#     columnsHash = []
-#     for row in matrix:
-#         rowsHash.append(sum(row))
-#
-#     for x in range(len(matrix[0])):
-#         columnSum = 0
-#         for y in range(len(matrix)):
-#             columnSum += matrix[y][x]
-#             columnsHash.append(columnSum)
-#     rowsHash.sort()
-#     columnsHash.sort()
-#     matrixHash = 0
-#     for val in rowsHash:
-#         matrixHash <<= 32
-#         matrixHash |= val
-#     for val in columnsHash:
-#         matrixHash <<= 32
-#         matrixHash |= val
-#
-#     return matrixHash
-
-
-# class MatricesCombinations:
-#     def __init__(self, width, height, elementRange):
-#         self.width = width
-#         self.height = height
-#         self.elementRange = elementRange
-#         self.matricesHashes = Set()
-
 def combinationsCount(n, k):
     return math.factorial(n) / (math.factorial(k) * math.factorial(n - k))
 
@@ -50,7 +19,6 @@ def answer(w, h, s):
 
     rowsSwappingCount = combinationsCount(h, 2)
     columnsSwappingCount = combinationsCount(w, 2)
-    # rowsAndColumnsSwappingCount = math.factorial(rowsSwappingCount) * math.factorial(columnsSwappingCount)
     rowsAndColumnsSwappingCount = 0
     for i in range(rowsSwappingCount + columnsSwappingCount):
         rowsAndColumnsSwappingCount += combinationsCount(rowsSwappingCount + columnsSwappingCount, i + 1)
@@ -60,26 +28,14 @@ def answer(w, h, s):
     result = 0
     # combinations which just do nothing
     result += s ** (w * h)
-    # result += combinationsCount(s ** w, h)
-    # result += placementsCount(s ** w, h)
 
     # swapping any two rows
     result += rowsSwappingCount * (s ** w)
     # swapping any two columns
     result += columnsSwappingCount * (s ** h)
     # swapping rows and columns
-    # result += 4  # rowsSwappingCount * columnsSwappingCount * s
-    # result += (rowsSwappingCount + columnsSwappingCount) * (rowsSwappingCount * (s ** w) - 2 + columnsSwappingCount * (s ** h) - 2)
-    # result += 4
-
-    # for y in range(rowsSwappingCount):
-    #     for x in range(columnsSwappingCount):
-    #         result += 174  # 4 + 4 * 4  # (s ** (w - 2)) + (s ** (h - 2)) + 2
     for i in range(rowsAndColumnsSwappingCount):
         result += 293
-
-    #
-    # result = 3440
 
     return "elements: {}; actions: {}; result: {};".format(result, actionsCount, result / actionsCount)
 
